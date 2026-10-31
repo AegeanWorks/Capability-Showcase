@@ -1,0 +1,18 @@
+{
+  "schema": 1,
+  "name": "capability-showcase",
+  "test_command": null,
+  "topics": [
+    "aikit",
+    "aikit-integrated",
+    "source-available",
+    "aegean-license",
+    "commercial-license",
+    "developer-tools",
+    "automation"
+  ],
+  "gates": {},
+  "ui_required": false,
+  "mechanics_required": false,
+  "created": "2026-10-31"
+}
