@@ -15,17 +15,31 @@
   "assets": {
     "logo": {
       "path": "assets/logo.svg",
-      "status": "pending_review",
+      "status": "approved",
       "commit": "",
       "generated_at": "2026-10-31T15:32:01",
-      "review": null
+      "review": {
+        "status": "approved",
+        "reviewer": "agent:antigravity",
+        "method": "structural",
+        "notes": "orbit monogram and mint palette fit CLI identity",
+        "score": null,
+        "reviewed_at": "2026-11-01T10:44:38"
+      }
     },
     "social_preview": {
       "path": "assets/social-preview.svg",
-      "status": "pending_review",
+      "status": "approved",
       "commit": "",
       "generated_at": "2026-10-31T15:32:01",
-      "review": null
+      "review": {
+        "status": "approved",
+        "reviewer": "agent:antigravity",
+        "method": "structural",
+        "notes": "split layout and typography fit CLI showcase",
+        "score": null,
+        "reviewed_at": "2026-11-01T10:44:42"
+      }
     }
   },
   "screenshots": []
