@@ -6,11 +6,22 @@ A polished local-first showcase that demonstrates AI-assisted planning, implemen
 
 ## ⚡ 30-Second Cold-Start Quick Reference
 
-- **Runtime Prerequisites**: <FILL: each runtime this project needs and its minimum version>
+- **Runtime Prerequisites**: Python 3.10+; standard library only.
 - **Canonical Regression Shield Gate**:
   ```bash
-  <FILL: the command that runs the whole test suite from this project root>
+  python -m unittest discover -s tests -p "test_*.py"
   ```
+
+### ▶️ Try the capability
+
+From this directory:
+
+```bash
+python signal_garden.py "ship an auth service"
+python signal_garden.py "build a local notes app" --json
+```
+
+The output is deterministic and local-only: a title, bounded milestones, keyword-based risk prompts, and an effort hint. It is intentionally small so an agent can inspect, test, and extend it quickly.
 
 ### 🛠️ AIKit Commands (run from the AIKit folder)
 | Role | Command |
@@ -30,6 +41,10 @@ capability-showcase/
 ├── LICENSES/                 <- REUSE license texts
 ├── REUSE.toml                <- Machine-readable SPDX metadata
 ├── README.md
+├── assets/                   <- brand logo and social preview
+├── signal_garden.py          <- dependency-free CLI and brief builder
+├── tests/
+│   └── test_signal_garden.py
 └── .aikit/                   <- this project's memory: record, ledger, decisions
 ```
 

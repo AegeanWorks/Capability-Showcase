@@ -1,0 +1,32 @@
+{
+  "schema": 1,
+  "name": "capability-showcase",
+  "repo": "Capability-Showcase",
+  "has_ui": false,
+  "ui_kind": "library",
+  "palette": [
+    "#07120d",
+    "#123030",
+    "#66f5bc",
+    "#8eaaf5"
+  ],
+  "motif": "orbit",
+  "layout": "split",
+  "assets": {
+    "logo": {
+      "path": "assets/logo.svg",
+      "status": "pending_review",
+      "commit": "",
+      "generated_at": "2026-10-31T15:32:01",
+      "review": null
+    },
+    "social_preview": {
+      "path": "assets/social-preview.svg",
+      "status": "pending_review",
+      "commit": "",
+      "generated_at": "2026-10-31T15:32:01",
+      "review": null
+    }
+  },
+  "screenshots": []
+}
