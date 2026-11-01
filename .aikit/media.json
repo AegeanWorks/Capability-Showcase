@@ -3,42 +3,42 @@
   "name": "capability-showcase",
   "repo": "Capability-Showcase",
   "has_ui": false,
-  "ui_kind": "library",
+  "ui_kind": "cli",
   "palette": [
-    "#07120d",
-    "#123030",
-    "#66f5bc",
-    "#8eaaf5"
+    "#0c0713",
+    "#2d1230",
+    "#b25ef3",
+    "#f490ae"
   ],
-  "motif": "orbit",
-  "layout": "split",
+  "motif": "grid",
+  "layout": "center",
   "assets": {
     "logo": {
       "path": "assets/logo.svg",
       "status": "approved",
       "commit": "",
-      "generated_at": "2026-10-31T15:32:01",
+      "generated_at": "2026-11-02T00:46:16",
       "review": {
         "status": "approved",
-        "reviewer": "agent:gemini",
+        "reviewer": "agent:kilo",
         "method": "structural",
-        "notes": "Capability showcase logo",
-        "score": null,
-        "reviewed_at": "2026-11-01T10:46:44"
+        "notes": "Reseed grid identity: crisp rounded-square grid, correct CS monogram, valid SVG.",
+        "score": 88,
+        "reviewed_at": "2026-11-02T00:53:24"
       }
     },
     "social_preview": {
       "path": "assets/social-preview.svg",
       "status": "approved",
       "commit": "",
-      "generated_at": "2026-10-31T15:32:01",
+      "generated_at": "2026-11-02T00:46:16",
       "review": {
         "status": "approved",
-        "reviewer": "agent:gemini",
+        "reviewer": "agent:kilo",
         "method": "structural",
-        "notes": "Capability showcase banner",
-        "score": null,
-        "reviewed_at": "2026-11-01T10:46:45"
+        "notes": "Center card: Capability Showcase title, kicker clear of tagline after template fix, chips and footer legible.",
+        "score": 88,
+        "reviewed_at": "2026-11-02T00:53:25"
       }
     }
   },
