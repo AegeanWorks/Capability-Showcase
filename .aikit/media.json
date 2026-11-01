@@ -20,11 +20,11 @@
       "generated_at": "2026-10-31T15:32:01",
       "review": {
         "status": "approved",
-        "reviewer": "agent:antigravity",
+        "reviewer": "agent:gemini",
         "method": "structural",
-        "notes": "orbit monogram and mint palette fit CLI identity",
+        "notes": "Capability showcase logo",
         "score": null,
-        "reviewed_at": "2026-11-01T10:44:38"
+        "reviewed_at": "2026-11-01T10:46:44"
       }
     },
     "social_preview": {
@@ -34,11 +34,11 @@
       "generated_at": "2026-10-31T15:32:01",
       "review": {
         "status": "approved",
-        "reviewer": "agent:antigravity",
+        "reviewer": "agent:gemini",
         "method": "structural",
-        "notes": "split layout and typography fit CLI showcase",
+        "notes": "Capability showcase banner",
         "score": null,
-        "reviewed_at": "2026-11-01T10:44:42"
+        "reviewed_at": "2026-11-01T10:46:45"
       }
     }
   },

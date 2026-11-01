@@ -9,7 +9,13 @@
     "aegean-license",
     "commercial-license",
     "developer-tools",
-    "automation"
+    "automation",
+    "cli",
+    "python",
+    "local-first",
+    "architecture-showcase",
+    "planning",
+    "disruption-recovery"
   ],
   "gates": {},
   "ui_required": false,
@@ -21,5 +27,7 @@
     "signal_garden.py"
   ],
   "ui_checked_at": "2026-11-01",
-  "ui_source": "detected"
+  "ui_source": "detected",
+  "topics_source": "manual",
+  "topics_reviewed_at": "2026-11-01"
 }
