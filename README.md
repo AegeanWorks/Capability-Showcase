@@ -19,9 +19,17 @@ From this directory:
 ```bash
 python signal_garden.py "ship an auth service"
 python signal_garden.py "build a local notes app" --json
+python signal_garden.py "deploy payment microservice" --markdown
+python signal_garden.py "harden auth layer" --aikit --task-id "auth-v1"
 ```
 
-The output is deterministic and local-only: a title, bounded milestones, keyword-based risk prompts, and an effort hint. It is intentionally small so an agent can inspect, test, and extend it quickly.
+Pipe mode from standard input:
+
+```bash
+echo "build offline analytics pipeline" | python signal_garden.py -
+```
+
+The output is deterministic and local-only: an acronym-safe title, bounded domain-tailored milestones, keyword-based risk prompts across 10 engineering domains, and an effort hint. It is intentionally small so an agent can inspect, test, and extend it quickly.
 
 ### 🛠️ AIKit Commands (run from the AIKit folder)
 | Role | Command |

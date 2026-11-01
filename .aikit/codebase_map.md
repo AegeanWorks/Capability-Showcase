@@ -8,9 +8,9 @@
 ## 📊 Codebase Metrics
 - **Total Python Modules**: `2`
 - **Total Classes**: `2`
-- **Total Top-Level Functions**: `4`
-- **Total Class Methods**: `5`
-- **Total Source Lines**: `140`
+- **Total Top-Level Functions**: `6`
+- **Total Class Methods**: `15`
+- **Total Source Lines**: `343`
 
 ---
 
@@ -19,22 +19,26 @@
 ### [`signal_garden.py`](signal_garden.py)
 > *Turn a plain-text goal into a small, deterministic execution brief.*
 
-**Size**: `100` lines (`3112` bytes)
+**Size**: `233` lines (`8226` bytes)
 
 **Classes:**
 - `class Brief`
   - Method `.as_dict()`
+  - Method `.to_markdown()`
+  - Method `.to_aikit_checkpoint(task_id)`
 
 **Functions:**
 - `def _title(goal)`
+- `def _tailor_milestones(lowered)`
 - `def build_brief(goal)` - *Build a bounded brief without network access or hidden state.*
 - `def _parser()`
+- `def _read_goal(args_goal)`
 - `def main(argv)`
 
 ---
 
 ### [`tests/test_signal_garden.py`](tests/test_signal_garden.py)
-**Size**: `40` lines (`1270` bytes)
+**Size**: `110` lines (`4381` bytes)
 
 **Classes:**
 - `class SignalGardenTests`
@@ -42,5 +46,13 @@
   - Method `.test_long_goals_are_marked_expanded()`
   - Method `.test_empty_goal_is_rejected()`
   - Method `.test_json_mode_is_machine_readable()`
+  - Method `.test_title_preserves_acronyms_and_special_casing()`
+  - Method `.test_expanded_risk_taxonomy()`
+  - Method `.test_domain_aware_milestone_tailoring()`
+  - Method `.test_markdown_mode_formatting()`
+  - Method `.test_aikit_checkpoint_export()`
+  - Method `.test_stdin_pipe_support()`
+  - Method `.test_goal_length_bound()`
+  - Method `.test_error_triad_output_on_invalid_goal()`
 
 ---
