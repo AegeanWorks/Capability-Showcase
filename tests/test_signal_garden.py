@@ -105,6 +105,67 @@ class SignalGardenTests(unittest.TestCase):
         self.assertIn("Why:", err_text)
         self.assertIn("Fix:", err_text)
 
+    def test_wave10_no_substring_false_positives(self):
+        for goal in (
+            "build a sandbox demo",
+            "make a rapid prototype",
+            "do a superficial check",
+            "author a blog post",
+        ):
+            brief = build_brief(goal)
+            self.assertEqual(
+                brief.risks,
+                ("No keyword risk detected; review assumptions before implementation.",),
+                msg=f"false positive for {goal!r}: {brief.risks}",
+            )
+
+    def test_wave10_legitimate_variants_still_detected(self):
+        brief = build_brief("harden authentication with https apis and payments")
+        self.assertTrue(any("Authentication" in r for r in brief.risks))
+        self.assertTrue(any("Network" in r for r in brief.risks))
+        self.assertTrue(any("Payment" in r or "idempotency" in r for r in brief.risks))
+        perf_brief = build_brief("improve performance of the service")
+        self.assertTrue(any("Performance" in r for r in perf_brief.risks))
+
+    def test_wave20_milestone_no_false_positives(self):
+        sandbox = build_brief("build a sandbox demo")
+        self.assertEqual(
+            sandbox.milestones[0],
+            "Clarify the outcome and define a measurable success check.",
+            msg=f"sandbox M1 should be generic, got {sandbox.milestones[0]!r}",
+        )
+        rapid = build_brief("make a rapid prototype")
+        self.assertEqual(
+            rapid.milestones[2],
+            "Exercise the happy path and one meaningful edge case.",
+            msg=f"rapid M3 should be generic, got {rapid.milestones[2]!r}",
+        )
+        superficial = build_brief("do a superficial check")
+        self.assertEqual(
+            superficial.milestones[1],
+            "Implement the smallest vertical slice with explicit failure handling.",
+            msg=f"superficial M2 should be generic, got {superficial.milestones[1]!r}",
+        )
+
+    def test_wave20_milestone_legitimate_variants(self):
+        scaling = build_brief("build a scaling service for high throughput")
+        self.assertIn("resource-bounded", scaling.milestones[1])
+        caching = build_brief("add a caching layer with mysql persistence")
+        self.assertIn("data schema", caching.milestones[0].lower())
+        auth = build_brief("harden authentication boundaries")
+        self.assertIn("authentication", auth.milestones[0].lower())
+
+    def test_wave30_aikit_checkpoint_escapes_quotes(self):
+        brief = build_brief('ship "quoted" auth service')
+        cmd = brief.to_aikit_checkpoint(task_id="t1")
+        self.assertIn('\\"quoted\\"', cmd)
+        self.assertNotIn('"ship "quoted"', cmd)
+
+    def test_wave30_aikit_checkpoint_escapes_backslash(self):
+        brief = build_brief("fix path C:\\temp\\auth service")
+        cmd = brief.to_aikit_checkpoint(task_id="t1")
+        self.assertIn("C:\\\\temp\\\\auth", cmd)
+
 
 if __name__ == "__main__":
     unittest.main()

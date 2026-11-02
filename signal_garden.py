@@ -52,6 +52,68 @@ RISK_ALIASES = {
     "gdpr": "privacy",
 }
 
+# Wave 10: token-boundary variants replace substring matching.
+# Substring `term in lowered` caused false positives (`db` in `sandbox`,
+# `api` in `rapid`, `perf` in `superficial`, `auth` in `author`).
+# Matching is now done on alphanumeric tokens with an explicit variant list
+# so legitimate derivations still match (`authentication` -> auth,
+# `performance` -> perf, `https` -> network, `mysql`/`postgresql` -> database).
+RISK_TOKEN_VARIANTS: dict[str, set[str]] = {
+    "auth": {
+        "auth", "authentication", "authentications", "authenticate", "authenticates",
+        "authenticated", "authenticating", "authorization", "authorizations",
+        "authorisation", "authorisations", "authorize", "authorizes", "authorized",
+        "authorizing", "authorise", "authorises", "authorised", "authorising",
+        "authn", "authz", "login", "logins", "token", "tokens",
+        "permission", "permissions",
+    },
+    "payment": {
+        "payment", "payments", "paid", "paying", "billing", "billings", "billed",
+        "transaction", "transactions",
+    },
+    "secret": {"secret", "secrets", "password", "passwords", "credential", "credentials"},
+    "delete": {
+        "delete", "deletes", "deleted", "deleting", "deletion", "deletions",
+        "purge", "purges", "purged", "purging",
+        "destroy", "destroys", "destroyed", "destroying",
+    },
+    "migration": {
+        "migration", "migrations", "migrate", "migrates", "migrated", "migrating",
+        "schema", "schemas",
+    },
+    "network": {
+        "network", "networks", "networking", "networked",
+        "http", "https", "api", "apis", "remote", "remotes",
+    },
+    "concurrency": {
+        "concurrency", "concurrent", "concurrently",
+        "thread", "threads", "threaded", "threading",
+        "parallel", "parallels", "async",
+    },
+    "database": {
+        "database", "databases", "db", "dbs",
+        "persist", "persists", "persisted", "persisting", "persistence",
+        "sql", "mysql", "postgres", "postgresql", "sqlite",
+        "cache", "caches", "cached", "caching",
+    },
+    "perf": {
+        "perf", "performance", "performances", "performant",
+        "perform", "performs", "performed", "performing",
+        "scale", "scales", "scaled", "scaling", "scalable",
+        "speed", "speeds", "latency", "latencies",
+        "benchmark", "benchmarks", "benchmarking",
+    },
+    "privacy": {"privacy", "privacies", "private", "pii", "gdpr"},
+}
+
+
+def _word_tokens(lowered: str) -> set[str]:
+    return set(re.findall(r"[a-z0-9]+", lowered))
+
+
+def _shell_escape(value: str) -> str:
+    return value.replace("\\", "\\\\").replace('"', '\\"')
+
 
 @dataclass(frozen=True)
 class Brief:
@@ -84,11 +146,17 @@ class Brief:
         return "\n".join(lines)
 
     def to_aikit_checkpoint(self, task_id: str = "showcase-task") -> str:
-        risks_str = "; ".join(self.risks).replace('"', '\\"')
+        # Wave 30: escape backslashes then double-quotes in every interpolated
+        # field so goals like `ship "quoted" ...` or `C:\temp\...` stay inside
+        # their double-quoted shell fragments instead of breaking them.
+        risks_str = _shell_escape("; ".join(self.risks))
+        title = _shell_escape(self.title)
+        goal = _shell_escape(self.goal)
+        summary = _shell_escape(self.summary)
         return (
             f"python aikit.py checkpoint capability-showcase --task {task_id} "
-            f'--phase-num 2 --desc "[1/4] {self.title}" '
-            f'--why "{self.goal}" --benefits "{self.summary}" '
+            f'--phase-num 2 --desc "[1/4] {title}" '
+            f'--why "{goal}" --benefits "{summary}" '
             f'--risks "{risks_str}" '
             '--mitigation "Follow the 4-phase milestone delivery with verified tests."'
         )
@@ -104,12 +172,25 @@ def _title(goal: str) -> str:
     return " ".join([first_cap, *selected[1:]])
 
 
+# Wave 20: milestone tailoring uses the same token boundaries as risk
+# detection, so `sandbox`/`rapid`/`superficial` no longer misfire while
+# `scaling`, `caching`, `authentication`, and `mysql` correctly tailor.
+_DATA_MILESTONE_TOKENS = frozenset(
+    {
+        "data", "dataset", "datasets", "metadata", "datastore",
+        *RISK_TOKEN_VARIANTS["database"],
+        *RISK_TOKEN_VARIANTS["migration"],
+    }
+)
+
+
 def _tailor_milestones(lowered: str) -> tuple[str, ...]:
-    has_auth = any(term in lowered for term in ("auth", "login", "permission"))
-    has_payment = any(term in lowered for term in ("payment", "billing", "transaction"))
-    has_data = any(term in lowered for term in ("data", "db", "database", "migration", "sql"))
-    has_network = any(term in lowered for term in ("network", "api", "http", "remote"))
-    has_perf = any(term in lowered for term in ("perf", "scale", "latency", "benchmark"))
+    tokens = _word_tokens(lowered)
+    has_auth = not RISK_TOKEN_VARIANTS["auth"].isdisjoint(tokens)
+    has_payment = not RISK_TOKEN_VARIANTS["payment"].isdisjoint(tokens)
+    has_data = not _DATA_MILESTONE_TOKENS.isdisjoint(tokens)
+    has_network = not RISK_TOKEN_VARIANTS["network"].isdisjoint(tokens)
+    has_perf = not RISK_TOKEN_VARIANTS["perf"].isdisjoint(tokens)
 
     if has_auth:
         m1 = "Clarify authentication boundaries, access control, and success criteria."
@@ -148,13 +229,11 @@ def build_brief(goal: str) -> Brief:
         raise ValueError("goal must contain at least one non-whitespace character")
 
     lowered = normalized.lower()
+    tokens = _word_tokens(lowered)
     matched_keys: set[str] = set()
-    for term in RISK_TERMS:
-        if term in lowered:
-            matched_keys.add(term)
-    for alias, primary in RISK_ALIASES.items():
-        if alias in lowered:
-            matched_keys.add(primary)
+    for key, variants in RISK_TOKEN_VARIANTS.items():
+        if not variants.isdisjoint(tokens):
+            matched_keys.add(key)
 
     risks = tuple(RISK_TERMS[key] for key in sorted(matched_keys))
     milestones = _tailor_milestones(lowered)

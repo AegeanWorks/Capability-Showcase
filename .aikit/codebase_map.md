@@ -8,9 +8,9 @@
 ## 📊 Codebase Metrics
 - **Total Python Modules**: `2`
 - **Total Classes**: `2`
-- **Total Top-Level Functions**: `6`
-- **Total Class Methods**: `15`
-- **Total Source Lines**: `343`
+- **Total Top-Level Functions**: `8`
+- **Total Class Methods**: `21`
+- **Total Source Lines**: `483`
 
 ---
 
@@ -19,7 +19,7 @@
 ### [`signal_garden.py`](signal_garden.py)
 > *Turn a plain-text goal into a small, deterministic execution brief.*
 
-**Size**: `233` lines (`8226` bytes)
+**Size**: `312` lines (`11508` bytes)
 
 **Classes:**
 - `class Brief`
@@ -28,6 +28,8 @@
   - Method `.to_aikit_checkpoint(task_id)`
 
 **Functions:**
+- `def _word_tokens(lowered)`
+- `def _shell_escape(value)`
 - `def _title(goal)`
 - `def _tailor_milestones(lowered)`
 - `def build_brief(goal)` - *Build a bounded brief without network access or hidden state.*
@@ -38,7 +40,7 @@
 ---
 
 ### [`tests/test_signal_garden.py`](tests/test_signal_garden.py)
-**Size**: `110` lines (`4381` bytes)
+**Size**: `171` lines (`7282` bytes)
 
 **Classes:**
 - `class SignalGardenTests`
@@ -54,5 +56,11 @@
   - Method `.test_stdin_pipe_support()`
   - Method `.test_goal_length_bound()`
   - Method `.test_error_triad_output_on_invalid_goal()`
+  - Method `.test_wave10_no_substring_false_positives()`
+  - Method `.test_wave10_legitimate_variants_still_detected()`
+  - Method `.test_wave20_milestone_no_false_positives()`
+  - Method `.test_wave20_milestone_legitimate_variants()`
+  - Method `.test_wave30_aikit_checkpoint_escapes_quotes()`
+  - Method `.test_wave30_aikit_checkpoint_escapes_backslash()`
 
 ---
