@@ -1,15 +1,14 @@
 {
   "version": 1,
   "active_task": {
-    "task_id": "brief-builder-refinement-v1",
+    "task_id": "risk-oauth-gap-fix-v1",
     "last_phase": "phase 4",
-    "active_phase": 5,
-    "status": "completed",
-    "updated_at": 1793519020.8316445,
-    "owner": "antigravity:session",
-    "started_by": "antigravity:session",
-    "continuations": [],
-    "completed_at": 1793519027.9435873
+    "active_phase": 4,
+    "status": "in_progress",
+    "updated_at": 1793721937.82286,
+    "owner": "kilo:audit",
+    "started_by": "kilo:audit",
+    "continuations": []
   },
   "checkpoints": [
     {
@@ -60,6 +59,46 @@
       "timestamp": 1793519027.9435892,
       "timestamp_str": "2026-11-01 10:43:47",
       "agent": "antigravity:session"
+    },
+    {
+      "task_id": "risk-oauth-gap-fix-v1",
+      "phase": "phase 2",
+      "phase_num": 2,
+      "description": "[1/3] Planning: add oauth variants to auth token set to fix OAuth2 false-negative",
+      "files_affected": [],
+      "status": "in_progress",
+      "timestamp": 1793721886.3187802,
+      "timestamp_str": "2026-11-03 19:04:46",
+      "agent": "kilo:audit",
+      "impact_assessment": {
+        "why": "Goal 'secure with OAuth2' yields generic risk and milestones despite explicit OAuth2, while title test already treats OAuth2 as in-scope",
+        "benefits": "OAuth2 goals correctly trigger auth risk and auth-tailored milestones with zero new deps",
+        "risks": "contract: Brief schema unchanged; dependency: stdlib only; concurrency: none; state: none (stateless CLI)",
+        "mitigation": "Reuse RISK_TOKEN_VARIANTS auth set so risk and milestone paths fix together; add failing-first tests before code change"
+      },
+      "plan_digest": "f732c6d1ddcdf02185b8853507e7762484db0b1dd471590bd86161b999439759"
+    },
+    {
+      "task_id": "risk-oauth-gap-fix-v1",
+      "phase": "phase 3",
+      "phase_num": 3,
+      "description": "[2/3] Implementation: oauth/oauth2 variants plus wave31 failing-first test, map regenerated",
+      "files_affected": [],
+      "status": "in_progress",
+      "timestamp": 1793721929.882576,
+      "timestamp_str": "2026-11-03 19:05:29",
+      "agent": "kilo:audit"
+    },
+    {
+      "task_id": "risk-oauth-gap-fix-v1",
+      "phase": "phase 4",
+      "phase_num": 4,
+      "description": "[3/3] checklists: passed; 4/4 gates pass, 19 tests passing, ADR-005 recorded, map refreshed",
+      "files_affected": [],
+      "status": "in_progress",
+      "timestamp": 1793721937.82286,
+      "timestamp_str": "2026-11-03 19:05:37",
+      "agent": "kilo:audit"
     }
   ]
 }

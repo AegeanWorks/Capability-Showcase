@@ -64,7 +64,7 @@ RISK_TOKEN_VARIANTS: dict[str, set[str]] = {
         "authenticated", "authenticating", "authorization", "authorizations",
         "authorisation", "authorisations", "authorize", "authorizes", "authorized",
         "authorizing", "authorise", "authorises", "authorised", "authorising",
-        "authn", "authz", "login", "logins", "token", "tokens",
+        "authn", "authz", "oauth", "oauth2", "login", "logins", "token", "tokens",
         "permission", "permissions",
     },
     "payment": {

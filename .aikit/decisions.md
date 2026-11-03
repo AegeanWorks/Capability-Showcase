@@ -30,3 +30,10 @@ contract, a dependency, a data format or the architecture; IDs are consecutive a
 - **Context**: `to_aikit_checkpoint` interpolated goal/summary/title/risks into double-quoted shell fragments but escaped quotes only in risks, so a goal like `ship "quoted" auth service` produced broken `--why "ship "quoted" auth service"` and backslashes passed through unescaped.
 - **Decision**: Add `_shell_escape` (escape `\` then `"`) and apply it to title, goal, summary, and risks in `to_aikit_checkpoint`; CLI flags and output format unchanged.
 - **Consequences**: Quoted and Windows-path goals now emit parseable checkpoint commands; existing `--aikit` consumers see only corrected quoting for previously broken inputs; 2 new failing-first tests added.
+
+### ADR-005: OAuth token variants closing the auth false-negative gap
+- **Date**: 2026-11-03
+- **Status**: Accepted
+- **Context**: Token-boundary matching (ADR-002) had no `oauth`/`oauth2` entries, so `secure with OAuth2` yielded generic risk and generic milestones even though the title test treats OAuth2 as in-scope and OAuth unambiguously implies authentication.
+- **Decision**: Add `oauth` and `oauth2` to `RISK_TOKEN_VARIANTS["auth"]`; risk loop and `_tailor_milestones` reuse the same set so both paths fix together; Brief schema and milestone text unchanged.
+- **Consequences**: OAuth2 goals now trigger the auth risk and auth-tailored M1/M2/M3; no new false positives (`oauth` token appears only for OAuth); 1 new failing-first test added.

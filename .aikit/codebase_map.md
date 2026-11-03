@@ -9,8 +9,8 @@
 - **Total Python Modules**: `2`
 - **Total Classes**: `2`
 - **Total Top-Level Functions**: `8`
-- **Total Class Methods**: `21`
-- **Total Source Lines**: `483`
+- **Total Class Methods**: `22`
+- **Total Source Lines**: `491`
 
 ---
 
@@ -19,7 +19,7 @@
 ### [`signal_garden.py`](signal_garden.py)
 > *Turn a plain-text goal into a small, deterministic execution brief.*
 
-**Size**: `312` lines (`11508` bytes)
+**Size**: `312` lines (`11527` bytes)
 
 **Classes:**
 - `class Brief`
@@ -40,7 +40,7 @@
 ---
 
 ### [`tests/test_signal_garden.py`](tests/test_signal_garden.py)
-**Size**: `171` lines (`7282` bytes)
+**Size**: `179` lines (`7622` bytes)
 
 **Classes:**
 - `class SignalGardenTests`
@@ -62,5 +62,6 @@
   - Method `.test_wave20_milestone_legitimate_variants()`
   - Method `.test_wave30_aikit_checkpoint_escapes_quotes()`
   - Method `.test_wave30_aikit_checkpoint_escapes_backslash()`
+  - Method `.test_wave31_oauth_variants_detected()`
 
 ---

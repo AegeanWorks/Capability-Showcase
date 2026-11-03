@@ -166,6 +166,14 @@ class SignalGardenTests(unittest.TestCase):
         cmd = brief.to_aikit_checkpoint(task_id="t1")
         self.assertIn("C:\\\\temp\\\\auth", cmd)
 
+    def test_wave31_oauth_variants_detected(self):
+        brief = build_brief("secure with OAuth2")
+        self.assertTrue(
+            any("Authentication" in r for r in brief.risks),
+            msg=f"OAuth2 should trigger auth risk, got {brief.risks!r}",
+        )
+        self.assertIn("authentication", brief.milestones[0].lower())
+
 
 if __name__ == "__main__":
     unittest.main()
