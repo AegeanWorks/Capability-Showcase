@@ -5,6 +5,8 @@
 <p align="center"><a href="LICENSE"><img src="https://img.shields.io/badge/license-AL--1.1-2f9e44" alt="License"></a> <a href="https://github.com/AegeanWorks/AIKit"><img src="https://img.shields.io/badge/AIKit-integrated-6f42c1" alt="AIKit Integrated"></a></p>
 <!-- aegean:media:end -->
 
+> **Archived**: Retired experiment (archived 2026-11-05). This project is read-only; its GitHub repository is archived.
+
 
 A polished local-first showcase that demonstrates AI-assisted planning, implementation, testing, and resilient CLI design.
 
